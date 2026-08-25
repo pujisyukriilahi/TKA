@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Bank Try Out TKA Tutorin — akses seluruh TO dan Mini-TO SD dan SMP dalam satu website.">
+<meta name="description" content="Bank Try Out TKA Tutorin — akses latihan TKA SD dan SMP dengan kode akses.">
 <title>Bank Try Out TKA — Tutorin</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .card{transition:.2s ease}.card:hover{transform:translateY(-4px)}
+.hidden-access{display:none!important}
 </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen">
@@ -16,34 +17,49 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 <div class="max-w-6xl mx-auto px-6 py-12">
 <p class="text-blue-200 font-bold uppercase tracking-widest text-xs mb-3">Tutorin · TKA 2026</p>
 <h1 class="text-4xl md:text-5xl font-black tracking-tight">Bank Try Out TKA</h1>
-<p class="mt-4 max-w-2xl text-blue-100 text-lg">Satu website untuk mengakses seluruh Try Out dan Mini-TO TKA SD dan SMP.</p>
+<p class="mt-4 max-w-2xl text-blue-100 text-lg">Pilih jenjang, masukkan kode akses, lalu pilih latihan TKA yang ingin dikerjakan.</p>
 </div>
 </header>
-<main class="max-w-6xl mx-auto px-6 py-10">
-<section class="mb-10">
+
+<main class="max-w-5xl mx-auto px-6 py-10">
+<section class="mb-8">
 <h2 class="text-2xl font-black mb-2">Pilih Jenjang</h2>
-<p class="text-slate-500">Mulai dari jenjang, lalu pilih jenis TO yang ingin dikerjakan.</p>
+<p class="text-slate-500">Akses SD dan SMP dipisahkan dengan kode masing-masing.</p>
 </section>
-<div class="grid md:grid-cols-2 gap-6 mb-12">
-<a href="#sd" class="card bg-white rounded-3xl p-8 border border-slate-200 shadow-sm block">
-<div class="text-4xl mb-5">🎒</div><h3 class="text-3xl font-black">TKA SD</h3><p class="text-slate-500 mt-2">Paket 1–2 dan Mini-TO 1–3.</p>
-</a>
-<a href="#smp" class="card bg-white rounded-3xl p-8 border border-slate-200 shadow-sm block">
-<div class="text-4xl mb-5">📚</div><h3 class="text-3xl font-black">TKA SMP</h3><p class="text-slate-500 mt-2">Paket 1–3 dan Mini-TO 2–4.</p>
-</a>
+
+<div id="level-section" class="grid md:grid-cols-2 gap-6 mb-10">
+<button onclick="openAccess('SD')" class="card text-left bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+<div class="text-4xl mb-5">🎒</div><h3 class="text-3xl font-black">TKA SD</h3><p class="text-slate-500 mt-2">Paket 1–2 dan Mini-TO 1–3.</p><span class="inline-block mt-5 px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-sm">Akses TKA SD →</span>
+</button>
+<button onclick="openAccess('SMP')" class="card text-left bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+<div class="text-4xl mb-5">📚</div><h3 class="text-3xl font-black">TKA SMP</h3><p class="text-slate-500 mt-2">Paket 1–3 dan Mini-TO 2–4.</p><span class="inline-block mt-5 px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-sm">Akses TKA SMP →</span>
+</button>
 </div>
-<section id="sd" class="mb-14">
-<h2 class="text-2xl font-black mb-5">TKA SD</h2>
+
+<section id="access-panel" class="hidden bg-white rounded-3xl border border-slate-200 shadow-xl p-8 max-w-xl mx-auto mb-12">
+<div class="flex items-start justify-between gap-4 mb-6">
+<div><p class="text-xs font-black uppercase tracking-widest text-blue-600">Akses Terproteksi</p><h2 id="access-title" class="text-2xl font-black mt-1">Kode Akses</h2><p id="access-subtitle" class="text-slate-500 mt-2 text-sm"></p></div>
+<button onclick="closeAccess()" class="text-slate-400 hover:text-slate-700 text-2xl">×</button>
+</div>
+<label class="block text-sm font-bold text-slate-700 mb-2">Masukkan kode akses</label>
+<input id="access-code" type="password" autocomplete="off" placeholder="Masukkan kode akses" class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-blue-600 outline-none font-bold tracking-widest">
+<p id="access-error" class="hidden text-red-600 text-sm font-bold mt-3">Kode akses salah. Silakan coba lagi.</p>
+<button onclick="verifyAccess()" class="w-full mt-5 bg-blue-600 text-white py-4 rounded-2xl font-black hover:bg-blue-700">BUKA AKSES</button>
+</section>
+
+<div id="sd-content" class="hidden-access">
+<section class="mb-14"><div class="flex items-end justify-between mb-5"><div><p class="text-xs font-black uppercase tracking-widest text-blue-600">Akses SD aktif</p><h2 class="text-2xl font-black">TKA SD</h2></div><button onclick="lockLevel('SD')" class="text-sm font-bold text-slate-400 hover:text-slate-700">Kunci kembali</button></div>
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
 <a href="./SD/Paket-1/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-blue-600 uppercase">Paket</span><h3 class="text-xl font-black mt-2">Paket 1</h3><p class="text-slate-500 text-sm mt-2">Try Out TKA Matematika SD — Paket 1.</p><span class="inline-block mt-5 px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-sm">Mulai TO →</span></a>
 <a href="./SD/Paket-2/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-blue-600 uppercase">Paket</span><h3 class="text-xl font-black mt-2">Paket 2</h3><p class="text-slate-500 text-sm mt-2">Try Out TKA Matematika SD — Paket 2.</p><span class="inline-block mt-5 px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-sm">Mulai TO →</span></a>
-<a href="./SD/Mini-TO/TO-1/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 1</h3><p class="text-slate-500 text-sm mt-2">Latihan singkat TKA SD.</p><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
-<a href="./SD/Mini-TO/TO-2/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 2</h3><p class="text-slate-500 text-sm mt-2">Latihan singkat TKA SD.</p><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
-<a href="./SD/Mini-TO/TO-3/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 3</h3><p class="text-slate-500 text-sm mt-2">Latihan singkat TKA SD.</p><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
+<a href="./SD/Mini-TO/TO-1/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 1</h3><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
+<a href="./SD/Mini-TO/TO-2/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 2</h3><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
+<a href="./SD/Mini-TO/TO-3/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 3</h3><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
+</div></section>
 </div>
-</section>
-<section id="smp" class="mb-14">
-<h2 class="text-2xl font-black mb-5">TKA SMP</h2>
+
+<div id="smp-content" class="hidden-access">
+<section class="mb-14"><div class="flex items-end justify-between mb-5"><div><p class="text-xs font-black uppercase tracking-widest text-blue-600">Akses SMP aktif</p><h2 class="text-2xl font-black">TKA SMP</h2></div><button onclick="lockLevel('SMP')" class="text-sm font-bold text-slate-400 hover:text-slate-700">Kunci kembali</button></div>
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
 <a href="./SMP/Paket-1/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-blue-600 uppercase">Paket</span><h3 class="text-xl font-black mt-2">Paket 1</h3><span class="inline-block mt-5 px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-sm">Mulai TO →</span></a>
 <a href="./SMP/Paket-2/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-blue-600 uppercase">Paket</span><h3 class="text-xl font-black mt-2">Paket 2</h3><span class="inline-block mt-5 px-4 py-2 bg-blue-600 text-white rounded-xl font-bold text-sm">Mulai TO →</span></a>
@@ -51,10 +67,22 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 <a href="./SMP/Mini-TO/TO-2/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 2</h3><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
 <a href="./SMP/Mini-TO/TO-3/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 3</h3><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
 <a href="./SMP/Mini-TO/TO-4/index.html" class="card bg-white rounded-2xl p-6 border border-slate-200 shadow-sm"><span class="text-xs font-black text-emerald-600 uppercase">Mini-TO</span><h3 class="text-xl font-black mt-2">Mini-TO 4</h3><span class="inline-block mt-5 px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm">Mulai Mini-TO →</span></a>
+</div></section>
 </div>
-</section>
-<div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900"><strong>Catatan:</strong> tautan setiap TO akan aktif setelah halaman TO dan aset pendukungnya dipindahkan ke folder masing-masing di repository ini.</div>
+
+<div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-900"><strong>Catatan:</strong> kode akses ini adalah gerbang sederhana di sisi website. Untuk keamanan yang lebih kuat, validasi kode sebaiknya dipindahkan ke backend.</div>
 </main>
-<footer class="border-t border-slate-200 bg-white"><div class="max-w-6xl mx-auto px-6 py-6 text-sm text-slate-500">© 2026 Tutorin · Bank Try Out TKA</div></footer>
+<footer class="border-t border-slate-200 bg-white"><div class="max-w-5xl mx-auto px-6 py-6 text-sm text-slate-500">© 2026 Tutorin · Bank Try Out TKA</div></footer>
+
+<script>
+const ACCESS_CODES={SD:'TKA-SD-2026',SMP:'TKA-SMP-2026'};
+let selectedLevel=null;
+function openAccess(level){selectedLevel=level;document.getElementById('access-panel').classList.remove('hidden');document.getElementById('access-title').textContent='Kode Akses TKA '+level;document.getElementById('access-subtitle').textContent='Masukkan kode akses untuk membuka latihan '+level+'.';document.getElementById('access-code').value='';document.getElementById('access-error').classList.add('hidden');document.getElementById('access-code').focus();document.getElementById('access-panel').scrollIntoView({behavior:'smooth',block:'center'});}
+function closeAccess(){document.getElementById('access-panel').classList.add('hidden');selectedLevel=null;}
+function verifyAccess(){const code=document.getElementById('access-code').value.trim();if(!selectedLevel||code!==ACCESS_CODES[selectedLevel]){document.getElementById('access-error').classList.remove('hidden');return;}document.getElementById('access-error').classList.add('hidden');document.getElementById('access-panel').classList.add('hidden');document.getElementById(selectedLevel.toLowerCase()+'-content').classList.remove('hidden-access');document.getElementById('level-section').classList.add('hidden');localStorage.setItem('tkaAccess_'+selectedLevel,'true');document.getElementById(selectedLevel.toLowerCase()+'-content').scrollIntoView({behavior:'smooth'});}
+function lockLevel(level){document.getElementById(level.toLowerCase()+'-content').classList.add('hidden-access');document.getElementById('level-section').classList.remove('hidden');localStorage.removeItem('tkaAccess_'+level);window.scrollTo({top:0,behavior:'smooth'});}
+window.addEventListener('DOMContentLoaded',()=>{['SD','SMP'].forEach(level=>{if(localStorage.getItem('tkaAccess_'+level)==='true'){document.getElementById(level.toLowerCase()+'-content').classList.remove('hidden-access');}});});
+document.getElementById('access-code').addEventListener('keydown',e=>{if(e.key==='Enter')verifyAccess();});
+</script>
 </body>
 </html>
